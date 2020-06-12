@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ThienNam Game</title>
+    <style>
+        * {
+            margin: 0;
+        }
+
+        body {
+            background-image: url("backgroundfinal.png");
+            background-size: cover;
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: bold;
+            color: whitesmoke;
+            font-size: 17px;
+            overflow: hidden;
+        }
+
+        ul {
+            list-style-type: none;
+        }
+
+        .question:hover,
+        .answer:hover {
+            cursor: pointer;
+        }
+
+        .correct-answer {
+            animation: truetwinkling 0.3s ease 3 forwards;
+        }
+
+        .wrong-answer {
+            animation: falsetwinkling 0.3s ease 3 forwards;
+        }
+
+        #main-menu {
+            position: absolute;
+            /* border: 1px solid red; */
+            width: 100px;
+            top: 120px;
+            left: 450px;
+            z-index: 2;
+        }
+
+        .question {
+            /* border: 1px solid cyan; */
+            font-size: 19px;
+            font-weight: 100;
+            height: 22px;
+            width: 220px;
+            padding-top: 10px;
+            padding-left: 170px;
+        }
+
+        #curnt-question {
+            /* border: 1px solid black; */
+            position: absolute;
+            bottom: 20px;
+            text-align: center;
+            bottom: 36px;
+            right: 200px;
+            height: 225px;
+        }
+
+        #answers {
+            /* border: 1px solid cyan; */
+            position: relative;
+            width: 1000px;
+            height: 130px;
+            z-index: 2;
+        }
+
+        .answer {
+            display: inline-block;
+            width: 393px;
+            /* border: 1px solid black; */
+            text-align: left;
+            height: 48px;
+            overflow: hidden;
+            background: none;
+            padding-top: 10px;
+            padding-left: 17px;
+            padding-right: 10px;
+            /* 420 x 58 */
+        }
+
+        #content {
+            /* border: 1px red dashed; */
+            height: 74px;
+            width: 830px;
+            margin-left: 95px;
+            font-size: 22px;
+            padding-top: 20px;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+        #mask {
+            position: absolute;
+            bottom: 0;
+            width: 1366px;
+            height: 768px;
+            background-image: url("background1.png");
+            background-size: cover;
+            z-index: 1;
+        }
+
+        #mask-ans {
+            position: absolute;
+            bottom: 44px;
+            right: 203px;
+            width: 900px;
+            z-index: 0;
+        }
+
+        .mask-answer {
+            width: 420px;
+            height: 58px;
+            display: inline-block;
+        }
+
+        #mask-ques {
+            position: absolute;
+            top: 122px;
+            left: 400px;
+            z-index: 0;
+            /* border: 1px solid red; */
+        }
+
+        .mask-question {
+            /* border: 1px solid cyan; */
+            height: 33px;
+            width: 500px;
+        }
+
+        #logo-right {
+            position: absolute;
+            top: 90px;
+            right: 0px;
+            width: 677px;
+            height: 301px;
+            background-image: url("logoRight.png");
+            background-size: contain;
+            background-position: left;
+            z-index: 3;
+            /* transition: left cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.3s; */
+        }
+
+        #logo-left {
+            position: absolute;
+            top: 90px;
+            left: 0px;
+            width: 689px;
+            height: 301px;
+            background-image: url("logoLeft.png");
+            background-size: cover;
+            background-position: right;
+            z-index: 3;
+        }
+
+        .left-animation {
+            animation: toLeft 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        .right-animation {
+            animation: toRight 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        .back-green {
+            background: #04B404;
+        }
+
+        #main-screen {
+            position: absolute;
+            z-index: 4;
+            width: 100vw;
+            height: 100vh;
+            background: blue;
+        }
+
+        #btn-play {
+
+            position: absolute;
+            width: 1000px;
+            height: 80px;
+            background: none;
+            border: none;
+            font-size: 45px;
+            font-weight: bold;
+            color: white;
+            z-index: 6;
+            bottom: 180px;
+            left: 200px;
+            outline: none;
+        }
+
+        #btn-play:hover {
+            cursor: pointer;
+        }
+
+        #mask-main {
+            position: absolute;
+            z-index: 5;
+            background-image: url("mainScreen.png");
+            width: 100vw;
+            height: 100vh;
+            background-size: cover;
+            background-position: bottom;
+        }
+
+        @keyframes toRight {
+            0% {
+                right: 0;
+            }
+
+            100% {
+                right: -230px;
+            }
+        }
+
+        @keyframes toLeft {
+            0% {
+                left: 0;
+            }
+
+            100% {
+                left: -230px;
+            }
+        }
+
+        @keyframes truetwinkling {
+            0% {
+                background-color: #F4FA58;
+            }
+
+            100% {
+                background-color: #04B404;
+            }
+        }
+
+        @keyframes falsetwinkling {
+            0% {
+                background-color: #0040FF;
+            }
+
+            100% {
+                background-color: #FF0000;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="main-screen">
+        <div id="mask-main">
+
+        </div>
+        <button id="btn-play">Play</button>
+    </div>
+    <div id="div-logo">
+        <div class="logo" id="logo-right"></div>
+        <div class="logo" id="logo-left"></div>
+    </div>
+    <div id="main-menu">
+        <ul>
+            <li class="question">Câu 1</li>
+            <li class="question">Câu 2</li>
+            <li class="question">Câu 3</li>
+            <li class="question">Câu 4</li>
+            <li class="question">Câu 5</li>
+            <li class="question">Câu 6</li>
+            <li class="question">Câu 7</li>
+        </ul>
+    </div>
+    <div id="curnt-question">
+        <p id="content"></p>
+        <div id="answers">
+            <ul>
+                <li class="answer" id="A"></li>
+                <li class="answer" id="B"></li>
+                <li class="answer" id="C"></li>
+                <li class="answer" id="D"></li>
+            </ul>
+        </div>
+    </div>
+    <div id="mask">
+    </div>
+    <div>
+        <ul id="mask-ques">
+            <li class="mask-question" id="q2"></li>
+            <li class="mask-question" id="q1"></li>
+            <li class="mask-question" id="q3"></li>
+            <li class="mask-question" id="q4"></li>
+            <li class="mask-question" id="q4"></li>
+            <li class="mask-question" id="q6"></li>
+            <li class="mask-question" id="q7"></li>
+        </ul>
+        <ul id="mask-ans">
+            <li class="mask-answer"></li>
+            <li class="mask-answer"></li>
+            <li class="mask-answer"></li>
+            <li class="mask-answer"></li>
+        </ul>
+    </div>
+    <div style="display: none;">
+        <audio id="correctSound" src="correctAnswer.mp3"></audio>
+        <audio id="wrongSound" src="wrongAnswer.ogg"></audio>
+    </div>
+</body>
+<script>
+
+    var curntQuest = 0;
+    var trueAnswer = ["D", "C", "D", "B", "D", "C", "A"];
+    var answers = document.getElementsByClassName("answer");
+    var questions = document.getElementsByClassName("question");
+    var maskAnswers = document.getElementsByClassName("mask-answer");
+    var maskQuestions = document.getElementsByClassName("mask-question");
+    var logo = document.getElementById("div-logo");
+    var logos = document.getElementsByClassName("logo");
+    var correctSound = document.getElementById("correctSound");
+    var wrongSound = document.getElementById("wrongSound");
+    var playButton = document.getElementById("btn-play");
+    var quesContent = [
+        "Câu 1: Theo thống kê 1/3 dân số Mỹ là người nghèo và ...",
+        "Câu 2: Đâu là nguyên nhân sâu xa dẫn đến khủng hoảng kinh tế ở Mỹ?",
+        "Câu 3: Tại sao khoảng cách giàu nghèo ở Mỹ lại lớn đến vậy?",
+        "Câu 4: Tại sao nói khủng hoảng kinh tế Mỹ có tính chu kỳ?",
+        "Câu 5: Vì sao nói \"Nước Mỹ là thiên đường nhưng chỉ với giai cấp thượng lưu\"?",
+        "Câu 6: Theo kinh tế, ở Mỹ có mấy dạng người?",
+        "Câu 7: 20 năm sau CTTG2, điều nào sau đây là sai khi nói về thành tựu của nước Mỹ?"
+    ]
+    var ansContent = [
+        [
+            "Người giàu",
+            "Người thất nghiệp",
+            "Người cận nghèo",
+            "Người vô gia cư"
+        ],
+        [
+            "Hàng hoá sản xuất ồ ạt dẫn đến khủng hoảng \"thừa\"",
+            "Thị trường BĐS sụp đổ và hành vi mua bán khống trục lợi cổ phiếu",
+            "Chế độ TBCN ảnh hưởng đến cơ chế vận hành nền kinh tế Mỹ",
+            "Cả 3 đáp án trên"
+        ],
+        [
+            "Nhà nước TBCN bảo vệ tầng lớp thượng lưu, bóc lột các tầng lớp lao động",
+            "Do đặc điểm của chế độ SHTN nên phần lớn của cải tập trung trong tay một số ít người",
+            "Bản chất của XHTB là làm giàu bằng cách bóc lột sức lao động của đa số người",
+            "Cả 3 đáp án trên"
+        ],
+        [
+            "Vì khủng hoảng xảy ra vào các năm 1987, 1997, 2008 với chu kỳ khoảng 10 năm",
+            "Vì có dấu hiệu của sự suy thoái lặp lại theo chu kỳ",
+            "Vì sự biến động của KTTT là do sự biến động của các công ty tư nhân",
+            "Cả 3 đáp án trên"
+        ],
+        [
+            "Khoảng cách giàu nghèo quá lớn và ngày một tăng",
+            "Sự phân biệt đối xử giữa các giai cấp.",
+            "Chính quyền Mỹ chỉ trợ giúp người giàu.",
+            "Cả 3 đáp án trên"
+        ],
+        [
+            "1",
+            "2",
+            "3",
+            "4"
+        ],
+        [
+            "Nông nghiệp bằng 5 nước Anh, Pháp, CHLB Đức, Italia, Nhật cộng lại",
+            "Công nghiệp chiếm 56,5% tổng sản lượng công nghiệp thế giới",
+            "Nắm 50% số lượng tàu bè đi lại trên biển, ¾ dự trữ vàng thế giới",
+            "Nắm giữ 1/3 bản quyền phát minh của toàn thế giới"
+        ]
+    ]
+
+    // Play the game
+
+    playButton.addEventListener("mouseover", event => {
+        document.getElementById("main-screen").style.background = "#04B404";
+    }, true);
+
+    playButton.addEventListener("mouseout", event => {
+        document.getElementById("main-screen").style.background = "blue";
+    }, true);
+
+    playButton.addEventListener("click", event => {
+        document.getElementById("main-screen").style.display = "none";
+        // open full screen
+        if ((document.fullScreenElement && document.fullScreenElement !== null) || (!document.mozFullScreen && !document.webkitIsFullScreen)) {
+            if (document.documentElement.requestFullScreen) {
+                document.documentElement.requestFullScreen();
+            } else if (document.documentElement.mozRequestFullScreen) {
+                document.documentElement.mozRequestFullScreen();
+            } else if (document.documentElement.webkitRequestFullScreen) {
+                document.documentElement.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
+            }
+        }
+    }, true);
+
+    // open logo
+
+    logo.addEventListener("mouseover", event => {
+        logos[0].classList.add("right-animation");
+        logos[1].classList.add("left-animation");
+    }, true);
+
+    // Control list of question
+
+    for (let i = 0; i < questions.length; i++) {
+
+        questions[i].addEventListener("mouseover", event => {
+            let i = getID(event.target);
+            if (!maskQuestions[i].classList.contains("back-green"))
+                maskQuestions[i].style.background = "red";
+        }, true);
+
+        questions[i].addEventListener("mouseout", event => {
+            let i = getID(event.target);
+            if (!maskQuestions[i].classList.contains("back-green"))
+                maskQuestions[i].style.background = "none";
+        }, true);
+
+        questions[i].addEventListener("click", event => {
+            let i = getID(event.target);
+            curntQuest = i;
+            maskQuestions[i].classList.add("back-green");
+            maskQuestions[i].style.background = "#04B404";
+            // console.log(curntQuest);
+
+            //console.log(elm.textContent[4]);
+
+            showQuestion(event.target);
+            closeLogo();
+        }, true);
+    }
+
+    const getID = (elm) => parseInt(elm.textContent[4], 10) - 1;
+
+    const clearLogoAnimation = () => {
+        logos[0].classList.remove("right-animation");
+        logos[1].classList.remove("left-animation");
+        logos[0].style = "";
+        logos[1].style = "";
+    }
+
+    const closeLogo = () => {
+        // clear animation
+        clearLogoAnimation();
+        // add reverse animation
+        logos[0].classList.add("right-animation");
+        logos[0].style.animationDirection = "reverse";
+        logos[1].classList.add("left-animation");
+        logos[1].style.animationDirection = "reverse";
+    }
+    const showQuestion = (elm) => {
+        let i = parseInt(elm.textContent[4], 10) - 1;
+        document.getElementById("content").textContent = quesContent[i];
+
+        // push answer and reset state
+        for (let i = 0; i < 4; i++) {
+            answers[i].textContent = answers[i].id + ". " + ansContent[curntQuest][i];
+            maskAnswers[i].style.background = "none";
+            maskAnswers[i].classList.remove("correct-answer");
+            maskAnswers[i].classList.remove("wrong-answer");
+        }
+    }
+
+    // Control answer
+
+    for (let i = 0; i < answers.length; i++) {
+        answers[i].addEventListener("click", event => {
+            let elm = event.target;
+            if (elm.id != trueAnswer[curntQuest]) {
+                let maskAns = maskAnswers[elm.id.charCodeAt(0) - 65];
+                maskAns.classList.add("wrong-answer");
+                wrongSound.play();
+                //maskAns.style.background = "#FF0000";
+            }
+            else {
+                correctSound.play();
+            }
+            showAnswer();
+        }, true);
+    }
+
+    const showAnswer = () => {
+
+        let elm = document.getElementById(trueAnswer[curntQuest]);
+        let maskAns = maskAnswers[elm.id.charCodeAt(0) - 65];
+        maskAns.classList.add("correct-answer");
+        clearLogoAnimation();
+        //maskAns.style.background = "#04B404";
+    }
+</script>
+
+</html>
